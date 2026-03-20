@@ -14,15 +14,12 @@ const GravityLab = () => {
     const [isJumping, setIsJumping] = useState(false);
     const astronautRef = useRef(null);
 
-    // Constants
     const earthGravity = PLANETS['Earth'].gravity;
-    const earthJumpBase = 0.5; // Average human jump is 0.5 meters
-
-    // Update selected planet and calculate relative jump
+    const earthJumpBase = 0.5; 
+    
     const handlePlanetChange = (newPlanet) => {
         setPlanet(newPlanet);
 
-        // Stop current jump if changing planets
         if (isJumping) {
             gsap.killTweensOf(astronautRef.current);
             gsap.to(astronautRef.current, { y: 0, duration: 0.2 });
@@ -38,18 +35,14 @@ const GravityLab = () => {
         setIsJumping(true);
 
         const planetData = PLANETS[selectedPlanet];
-        // Formula: earthJump * (earthGravity / planetGravity)
         const calculatedHeight = earthJumpBase * (earthGravity / planetData.gravity);
 
         setJumpHeight(calculatedHeight.toFixed(2));
 
-        // Visual animation height (scaled for UI)
-        const visualHeight = Math.min(calculatedHeight * 50, 400); // cap visual height
+        const visualHeight = Math.min(calculatedHeight * 50, 400);
 
-        // Time relative to gravity (lower gravity = longer hang time)
         const jumpDuration = 1 * (earthGravity / planetData.gravity) * 0.5;
 
-        // GSAP Physics simulation for jump
         gsap.to(astronautRef.current, {
             y: -visualHeight,
             duration: jumpDuration,
@@ -66,11 +59,9 @@ const GravityLab = () => {
     return (
         <div className="flex flex-col md:flex-row min-h-screen bg-slate-950 text-white overflow-hidden">
 
-            {/* 3D Viewport (Left/Top) */}
             <div className="relative w-full md:w-1/2 h-[50vh] md:h-screen bg-black">
                 <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
                     <ambientLight intensity={0.5} />
-                    {/* <pointLight position={[10, 10, 10]} intensity={2} /> */}
                     <Stars radius={70} depth={40} count={2500} factor={4} saturation={0} fade speed={1} />
                     <Environment preset="city" />
                     <Planet3D planetName={selectedPlanet} />
@@ -81,7 +72,6 @@ const GravityLab = () => {
                     />
                 </Canvas>
 
-                {/* Planet Identifier Overlay */}
                 <div className="absolute top-6 left-6 z-10">
                     <h2 className="text-4xl font-black drop-shadow-2xl tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-500">
                         {selectedPlanet.toUpperCase()}
@@ -90,7 +80,6 @@ const GravityLab = () => {
                 </div>
             </div>
 
-            {/* Control Panel (Right/Bottom) */}
             <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center bg-slate-900 border-l border-slate-800 shadow-2xl z-20 max-h-screen">
 
                 <div className="mb-4">
@@ -102,7 +91,6 @@ const GravityLab = () => {
                     </p>
                 </div>
 
-                {/* Planet Selector Slider/Tabs */}
                 <div className="flex bg-slate-800 p-1.5 rounded-2xl mb-4 w-full max-w-md shadow-inner">
                     {Object.keys(PLANETS).map((pNames) => (
                         <button
@@ -131,12 +119,9 @@ const GravityLab = () => {
                     </p>
                 </div>
 
-                {/* Jump Interaction Area */}
                 <div className="flex items-end gap-12 mb-12 flex-1">
 
-                    {/* Astronaut Visual */}
                     <div className="relative w-24 flex flex-col items-center">
-                        {/* Height Indicator track */}
                         <div className="absolute bottom-0 w-0.5 h-[300px] bg-slate-700 -z-10 rounded-full overflow-hidden">
                             <div className="w-full bg-blue-500 rounded-full transition-all duration-[2000ms]" style={{ height: isJumping ? '100%' : '10%' }}></div>
                         </div>
@@ -148,7 +133,6 @@ const GravityLab = () => {
                         >
                             🧑‍🚀
                         </div>
-                        {/* Ground shadow */}
                         <div
                             className={`w-16 h-3 bg-black/60 blur-sm rounded-full mt-2 transition-all duration-300 ${isJumping ? 'scale-50 opacity-20' : 'scale-100 opacity-100'}`}
                         ></div>
@@ -178,7 +162,6 @@ const GravityLab = () => {
                     </div>
                 </div>
 
-                {/* Next Scene */}
                 <div className="pt-6 border-t border-slate-800 flex justify-end">
                     <button
                         onClick={() => navigate('/test')}

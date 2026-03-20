@@ -41,7 +41,6 @@ const Personalize = () => {
             setName(localName);
             setWeight(Number(localWeight));
 
-            // Exit animation
             gsap.to(containerRef.current, {
                 opacity: 0,
                 scale: 0.9,
@@ -55,7 +54,7 @@ const Personalize = () => {
 
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-slate-950 text-white p-4">
-            {/* Background decoration */}
+
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 pointer-events-none" />
 
             <div

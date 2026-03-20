@@ -13,7 +13,6 @@ const IntroScene = () => {
     useEffect(() => {
         const tl = gsap.timeline();
 
-        // Reset planets array for React Strict Mode
         planetsRef.current = planetsRef.current.slice(0, 3);
 
         tl.fromTo(titleRef.current,
@@ -31,7 +30,6 @@ const IntroScene = () => {
                 '-=0.3'
             );
 
-        // Floating planet animations
         planetsRef.current.forEach((planet, index) => {
             if (!planet) return;
 
@@ -67,7 +65,6 @@ const IntroScene = () => {
     const navigate = useNavigate()
 
     const handleStart = () => {
-        // Exit animation
         gsap.to([titleRef.current, subtitleRef.current, buttonRef.current, ...planetsRef.current], {
             opacity: 0,
             scale: 0.8,
@@ -82,7 +79,6 @@ const IntroScene = () => {
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-slate-950 text-white p-4 overflow-hidden">
 
-            {/* Animated Background Elements - "Planets" */}
             <div
                 ref={el => planetsRef.current[0] = el}
                 className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-blue-500 blur-3xl opacity-20 pointer-events-none"
@@ -123,7 +119,6 @@ const IntroScene = () => {
                 </button>
             </div>
 
-            {/* Starfield effect (CSS simple) */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDIiIGhlaWdodD0iNDAyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0ibm9uemVybyIgb3BhY2l0eT0iLjA1Ij48cGF0aCBkPSJNMjAxIDIwMWEgMSAxIDAgMCAxIDAgMiAxIDEgMCAwIDEgMC0yeiIvPjwvZz48L2c+PC9zdmc+')] pointer-events-none bg-repeat"></div>
         </div>
     );

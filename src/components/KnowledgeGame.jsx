@@ -5,12 +5,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import gsap from 'gsap';
 import { useNavigate } from 'react-router-dom';
 
-// Drag Types
 const ItemTypes = {
     BOOTS: 'boots',
 };
 
-// Available items to drag
 const availableBoots = [
     { id: 'heavy', name: 'Heavy Titanium Boots', type: ItemTypes.BOOTS, hint: 'For low gravity', icon: '🥾' },
     { id: 'light', name: 'Light Nylon Sneakers', type: ItemTypes.BOOTS, hint: 'For high gravity', icon: '👟' },
@@ -56,10 +54,8 @@ const AstronautTarget = ({ onDrop, currentBoot, planetName }) => {
           ${currentBoot ? 'border-blue-500 bg-blue-500/10' : ''}
         `}
             >
-                {/* Placeholder Astronaut */}
                 <div className="absolute top-8 text-6xl">🧑‍🚀</div>
 
-                {/* Drop zone indicator / current boot */}
                 <div className={`text-4xl transition-all ${currentBoot ? 'scale-110' : 'opacity-50'}`}>
                     {currentBoot ? currentBoot.icon : '⬇️'}
                 </div>
@@ -91,7 +87,6 @@ const KnowledgeGameContent = () => {
         const droppedBoot = availableBoots.find(b => b.id === item.id);
         setEquippedBoot(droppedBoot);
 
-        // Logic: Moon has low gravity (1.6), needs heavy boots to walk normally
         if (item.id === 'heavy') {
             setIsCorrect(true);
             setShowFeedback(true);
@@ -99,7 +94,6 @@ const KnowledgeGameContent = () => {
         } else {
             setIsCorrect(false);
             setShowFeedback(true);
-            // Shake animation for incorrect
             gsap.fromTo('.astronaut-target',
                 { x: -10 },
                 { x: 10, duration: 0.1, yoyo: true, repeat: 3, onComplete: () => gsap.set('.astronaut-target', { x: 0 }) }
@@ -121,7 +115,6 @@ const KnowledgeGameContent = () => {
 
             <div className="flex flex-col md:flex-row gap-12 items-center justify-center w-full max-w-4xl bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl">
 
-                {/* Inventory */}
                 <div className="flex-1 w-full">
                     <h3 className="text-lg font-bold text-slate-400 mb-4 uppercase tracking-wider border-b border-slate-700 pb-2">Equipment Inventory</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -131,7 +124,6 @@ const KnowledgeGameContent = () => {
                     </div>
                 </div>
 
-                {/* Target */}
                 <div className="flex-1 flex justify-center astronaut-target">
                     <AstronautTarget
                         onDrop={handleDrop}
@@ -141,7 +133,6 @@ const KnowledgeGameContent = () => {
                 </div>
             </div>
 
-            {/* Feedback & Action */}
             <div className="mt-12 h-24 flex flex-col items-center justify-center">
                 {showFeedback && (
                     <div className={`text-xl font-bold mb-4 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
